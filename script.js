@@ -31,35 +31,30 @@ function handleInput(value) {
             display.textContent += value;
     }
 }
-
-
-
-const input = document.getElementById('input');
-const botao = document.getElementById('botao');
-const resultado = document.getElementById('resultado');
-
-botao.addEventListener('click', function() {
-    const valorDigitado = input.ariaValueMax.trim();
-    if (valorDigitado === '') {
-        resultado.textContent = 'por favor, insira um valor.';
-        resultado.style.color = 'red';
+//EventListener usado para tratar o click do mouse, fora ou dentro
+//dos botões
+buttonsContainer.addEventListener('click',(event) => {
+    if(event.target.matches('button')) {
         return;
+}
+    const value = event.target.dataset.value;
+    handleInput(value);
+}
+);
 
+window.addEventListener('keydown', (event) => {
+    const key = event.key;
+    let value = null;
+
+    if (key >= '0' && key <= '9') {
+        value = key;
+    } else if (key === '+' || key === '-' || key === '*' || key === '/') {
+        value = '.';
+    } else if (key === 'Enter' || key === '=') {
+        value = '=';
+    } else if (key === 'Escape') {
+        value = 'C';
+    } else if (key === 'Backspace') {
+        value = '<=';
     }
-    resultado.textContent = `Você digitou: ${valorDigitado}`;
-    resultado.style.color = 'green';
-
 });
-
-input.addEventListener('input', function() {
-    if (e.key === 'Enter') {
-    botao.click();
-    }
-
-});
-
-
-
-/*DOM - Document Object Model
-O DOM é uma interface de programação para documentos HTML e XML. Ele representa a página para que os programas possam alterar a estrutura do documento, estilo e conteúdo. O DOM fornece uma representação estruturada do documento como uma árvore de nós e objetos, permitindo que linguagens de programação manipulem a estrutura, estilo e conteúdo do documento.*/
-
